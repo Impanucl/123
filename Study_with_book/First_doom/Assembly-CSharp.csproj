@@ -61,6 +61,9 @@
      <Compile Include="Assets\Scripts\SceneController.cs" />
      <Compile Include="Assets\Scripts\Spin.cs" />
      <Compile Include="Assets\Scripts\WanderingAI.cs" />
+     <Compile Include="Assets\Tanks_Game\Scripts\CannonFire.cs" />
+     <Compile Include="Assets\Tanks_Game\Scripts\Flak.cs" />
+     <Compile Include="Assets\Tanks_Game\Scripts\MovePlayer.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
