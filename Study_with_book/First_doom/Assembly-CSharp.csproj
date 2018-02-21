@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\ReactiveTarget.cs" />
      <Compile Include="Assets\Scripts\SceneController.cs" />
      <Compile Include="Assets\Scripts\Spin.cs" />
+     <Compile Include="Assets\Scripts\UIController.cs" />
      <Compile Include="Assets\Scripts\WanderingAI.cs" />
      <Compile Include="Assets\Tanks_Game\Scripts\CannonFire.cs" />
      <Compile Include="Assets\Tanks_Game\Scripts\EnemyAI.cs" />
