@@ -6,8 +6,8 @@ public class SceneController : MonoBehaviour {
     [SerializeField] private GameObject enemyPrefab;
     private GameObject _enemy;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	

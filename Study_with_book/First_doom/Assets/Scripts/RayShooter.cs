@@ -24,7 +24,7 @@ public class RayShooter : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject())
+        if (Input.GetMouseButtonDown(0))
         {
             {
                 Vector3 point = new Vector3(_camera.pixelWidth / 2, _camera.pixelHeight / 2, 0);
@@ -37,6 +37,7 @@ public class RayShooter : MonoBehaviour {
                     if (target != null)
                     {
                         target.ReactToHit();
+                        Messenger.Broadcast(GameEvent.ENEMY_HIT);
                     } else
                     {
                         StartCoroutine(SphereIndicator(hit.point));

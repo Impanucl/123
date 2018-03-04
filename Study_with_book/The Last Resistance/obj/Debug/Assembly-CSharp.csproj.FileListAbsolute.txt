@@ -1,0 +1,2 @@
+D:\Работа на Unity\Unity\Study_with_book\The Last Resistance\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+D:\Работа на Unity\Unity\Study_with_book\The Last Resistance\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
