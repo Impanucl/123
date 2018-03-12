@@ -7,7 +7,8 @@ public class ShotGun : MonoBehaviour {
     [SerializeField] private GameObject spawnShotPosition;
     [SerializeField] private GameObject bulletPrefab;
     private GameObject _bullet;
-    public float intervalGun = 5.0f;
+    public float intervalGun = 0.3f;
+    private float _intervalGun;
 
     private bool tapRotationJoystick;
 
@@ -18,13 +19,15 @@ public class ShotGun : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetMouseButtonDown(0) && tapRotationJoystick)
+        if (Input.GetMouseButton(0) && tapRotationJoystick && (_intervalGun < 0.0f))
         {
             _bullet = Instantiate(bulletPrefab) as GameObject;
             _bullet.transform.position = spawnShotPosition.transform.position;
             _bullet.transform.rotation = transform.rotation;
-            intervalGun = 5.0f;
+            _intervalGun = intervalGun;
         }
+        _intervalGun -= Time.deltaTime;
+        Debug.Log(intervalGun);
     }
 
     void Awake()
