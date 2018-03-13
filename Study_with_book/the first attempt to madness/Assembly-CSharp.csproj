@@ -61,6 +61,7 @@
      <Compile Include="Assets\Game\Scripts\RotationJoystick.cs" />
      <Compile Include="Assets\Game\Scripts\RotationWeapon.cs" />
      <Compile Include="Assets\Game\Scripts\ShotGun.cs" />
+     <Compile Include="Assets\Game\Scripts\WeaponTemperature.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
