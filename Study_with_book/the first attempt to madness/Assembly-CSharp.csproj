@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Bullet\Scripts\Bullet.cs" />
+     <Compile Include="Assets\Enemy\Scripts\EnemyCarAI.cs" />
      <Compile Include="Assets\Game\Scripts\FPSInputs.cs" />
      <Compile Include="Assets\Game\Scripts\GameEvent.cs" />
      <Compile Include="Assets\Game\Scripts\Joystick.cs" />
