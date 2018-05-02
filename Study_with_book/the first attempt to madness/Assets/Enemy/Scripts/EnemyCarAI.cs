@@ -25,7 +25,7 @@ public class EnemyCarAI : MonoBehaviour {
             float angle = Random.Range(-110, 110);
             transform.Rotate(0, angle, 0);
         }
-            Debug.Log(distance);
+           // Debug.Log(distance);
         
     }
 }
