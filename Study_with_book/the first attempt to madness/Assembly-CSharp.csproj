@@ -54,15 +54,15 @@
      <Compile Include="Assets\Bullet\Scripts\Bullet.cs" />
      <Compile Include="Assets\Enemy\Scripts\EnemyCarAI.cs" />
      <Compile Include="Assets\Game\Scripts\FPSInputs.cs" />
-     <Compile Include="Assets\Game\Scripts\GameEvent.cs" />
      <Compile Include="Assets\Game\Scripts\Joystick.cs" />
-     <Compile Include="Assets\Game\Scripts\Messenger.cs" />
-     <Compile Include="Assets\Game\Scripts\MoveJoystick.cs" />
      <Compile Include="Assets\Game\Scripts\OrbitCamera.cs" />
-     <Compile Include="Assets\Game\Scripts\RotationJoystick.cs" />
      <Compile Include="Assets\Game\Scripts\RotationWeapon.cs" />
      <Compile Include="Assets\Game\Scripts\ShotGun.cs" />
-     <Compile Include="Assets\Game\Scripts\WeaponTemperature.cs" />
+     <Compile Include="Assets\GameEvent.cs" />
+     <Compile Include="Assets\Messenger.cs" />
+     <Compile Include="Assets\MoveJoystick.cs" />
+     <Compile Include="Assets\RotationJoystick.cs" />
+     <Compile Include="Assets\WeaponTemperature.cs" />
  <Reference Include="UnityEngine.UIAutomation">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UIAutomation/UnityEngine.UIAutomation.dll</HintPath>
  </Reference>
