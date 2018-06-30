@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\FPSInputs.cs" />
      <Compile Include="Assets\Scripts\GameEvent.cs" />
      <Compile Include="Assets\Scripts\Joystick.cs" />
      <Compile Include="Assets\Scripts\Messenger.cs" />
