@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MoveJoystick : Joystick, FPSInputs
+public class MoveJoystick : Joystick
 {
     [Header("Options")]
 
     Vector2 joystickCenter = Vector2.zero;
-	private float Xposition = 0;
-	private float Ypostion  = 0;
+    public float Xposition = 0;
+    public float Yposition = 0;
 
-	private MoveJoystick moveJoystick;
+    private MoveJoystick moveJoystick;
 
     void Start()
     {
@@ -20,6 +20,7 @@ public class MoveJoystick : Joystick, FPSInputs
 
     void Update()
     {
+    
     }
 
     public override void OnDrag(PointerEventData eventData)
@@ -28,10 +29,9 @@ public class MoveJoystick : Joystick, FPSInputs
         inputVector = (direction.magnitude > background.sizeDelta.x / 2f) ? direction.normalized : direction / (background.sizeDelta.x / 2f);
         handle.anchoredPosition = (inputVector * background.sizeDelta.x / 2f) * handleLimit;
 
-		//передача координат джойстика для анимации движения плейера 
-		Xposition = handle.transform.localPosition.x;
-		Ypostion  = handle.transform.localPosition.y;
-		SetPositionNumber(Xposition, Yposition);
+        //передача координат джойстика для анимации движения плейера 
+        Xposition = handle.transform.localPosition.x;
+        Yposition = handle.transform.localPosition.y;
     }
 
     public override void OnPointerDown(PointerEventData eventData)
@@ -46,12 +46,4 @@ public class MoveJoystick : Joystick, FPSInputs
         handle.anchoredPosition = Vector2.zero;
     }
 
-
-	public float SetPositionNumber(float positionX, float positionY)
-	{
-	 
-
-
-
-	}
 }
