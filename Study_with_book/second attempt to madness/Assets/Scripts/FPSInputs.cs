@@ -120,19 +120,9 @@ public class FPSInputs : MonoBehaviour
             playerSection = 0;
         }
 
-        if (Input.GetKey("d") && Input.GetKey("w"))
-        {
-            playerSection = 1;
-        }
-
         if (Input.GetKey("w"))
         {
             playerSection = 2;
-        }
-
-        if (Input.GetKey("w") && Input.GetKey("a"))
-        {
-            playerSection = 3;
         }
 
         if (Input.GetKey("a"))
@@ -140,14 +130,24 @@ public class FPSInputs : MonoBehaviour
             playerSection = 4;
         }
 
-        if (Input.GetKey("a") && Input.GetKey("s"))
-        {
-            playerSection = 5;
-        }
-
         if (Input.GetKey("s"))
         {
             playerSection = 6;
+        }
+
+        if (Input.GetKey("d") && Input.GetKey("w"))
+        {
+            playerSection = 1;
+        }
+
+        if (Input.GetKey("w") && Input.GetKey("a"))
+        {
+            playerSection = 3;
+        }
+
+        if (Input.GetKey("a") && Input.GetKey("s"))
+        {
+            playerSection = 5;
         }
 
         if (Input.GetKey("s") && Input.GetKey("d"))

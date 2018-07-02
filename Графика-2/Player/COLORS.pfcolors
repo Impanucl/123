@@ -1,0 +1,64 @@
+PIXELFORMER.COLORS
+ {
+ VERSION "1.0";
+ COLOR
+  {
+  RGBA255 "49,0,0";
+  }
+ COLOR
+  {
+  RGBA255 "70,0,0";
+  }
+ COLOR
+  {
+  RGBA255 "90,0,0";
+  }
+ COLOR
+  {
+  RGBA255 "110,0,0";
+  }
+ COLOR
+  {
+  RGBA255 "132,71,71";
+  }
+ COLOR
+  {
+  RGBA255 "124,52,52";
+  }
+ COLOR
+  {
+  RGBA255 "153,153,153";
+  }
+ COLOR
+  {
+  RGBA255 "39,39,39";
+  }
+ COLOR
+  {
+  RGBA255 "51,51,51";
+  }
+ COLOR
+  {
+  RGBA255 "100,0,0";
+  }
+ COLOR
+  {
+  RGBA255 "158,86,86";
+  }
+ COLOR
+  {
+  RGBA255 "100,0,0";
+  }
+ COLOR
+  {
+  RGBA255 "153,153,153";
+  }
+ COLOR
+  {
+  RGBA255 "99,95,95";
+  }
+ COLOR
+  {
+  RGBA255 "25,25,25";
+  }
+ }
