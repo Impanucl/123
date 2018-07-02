@@ -48,6 +48,9 @@ public class FPSInputs : MonoBehaviour
             //управление клавиатурой
             deltaX = Input.GetAxis("Horizontal") * speed;
             deltaY = Input.GetAxis("Vertical") * speed;
+            CalcPositionKeyboard();
+
+          //  CalcPositionKeyboard(Input.GetKey);
         }
 
         Vector3 movement = new Vector3(deltaX, deltaY, 0);
@@ -102,6 +105,52 @@ public class FPSInputs : MonoBehaviour
         }
 
         if ((positionY < 0) && (positionX > -positionY / 2) && (positionX < -positionY * 2))
+        {
+            playerSection = 7;
+        }
+
+        GetComponent<SpriteRenderer>().sprite = sprites[playerSection];
+    }
+
+    public void CalcPositionKeyboard()
+    {
+        //вычисление плоскости для поворота персонажа джойстиком
+        if (Input.GetKey("d"))
+        {
+            playerSection = 0;
+        }
+
+        if (Input.GetKey("d") && Input.GetKey("w"))
+        {
+            playerSection = 1;
+        }
+
+        if (Input.GetKey("w"))
+        {
+            playerSection = 2;
+        }
+
+        if (Input.GetKey("w") && Input.GetKey("a"))
+        {
+            playerSection = 3;
+        }
+
+        if (Input.GetKey("a"))
+        {
+            playerSection = 4;
+        }
+
+        if (Input.GetKey("a") && Input.GetKey("s"))
+        {
+            playerSection = 5;
+        }
+
+        if (Input.GetKey("s"))
+        {
+            playerSection = 6;
+        }
+
+        if (Input.GetKey("s") && Input.GetKey("d"))
         {
             playerSection = 7;
         }

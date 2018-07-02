@@ -1145,7 +1145,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 46dd965291d75a9478a6a02039f431d0, type: 3}
   - {fileID: 21300000, guid: 9d1c9cf458f3f0c4ba66f3e038fae776, type: 3}
   - {fileID: 21300000, guid: 5cab998193585d94188d2288ee2eb051, type: 3}
-  axes: 0
+  axes: 1
 --- !u!143 &1416752234
 CharacterController:
   m_ObjectHideFlags: 0
