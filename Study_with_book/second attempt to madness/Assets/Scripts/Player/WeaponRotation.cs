@@ -11,6 +11,9 @@ public class WeaponRotation : MonoBehaviour {
 
     public int playerSection = 4;
 
+	public float shiftX = 0.0F;
+	public float shiftY = 0.0F;
+
 
     void Start () {
       gunPosition = GetComponent<Transform>();
@@ -102,6 +105,6 @@ public class WeaponRotation : MonoBehaviour {
 
     private void SetPosition(float posX, float posY)
     {
-            gunPosition.localPosition = new Vector3(posX, posY, gunPosition.localPosition.z);
+		gunPosition.localPosition = new Vector3(shiftX + posX, shiftY + posY, gunPosition.localPosition.z);
     }
 }

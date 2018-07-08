@@ -1,13 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MoveJoystick.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Player/WeaponRotation.cs">
     <Files>
-      <File FileName="Assets/Scripts/MoveJoystick.cs" Line="52" Column="2" />
-      <File FileName="Assets/Scripts/FPSInputs.cs" Line="43" Column="51" />
-      <File FileName="Assets/Scripts/GameEvent.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/RotationJoystick.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Joystick.cs" Line="20" Column="3" />
-      <File FileName="Assets/Scripts/Messenger.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Player/FPSInputs.cs" Line="15" Column="45" />
+      <File FileName="Assets/Scripts/Player/WeaponRotation.cs" Line="110" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

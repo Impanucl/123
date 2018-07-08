@@ -12,8 +12,6 @@ public class FPSInputs : MonoBehaviour
     private float deltaY = 0;
     public int playerSection = 1;
     private Transform playerPosition;
-    private int income = 0;
-
     public Sprite[] sprites = new Sprite[8];
 
     //управление клавиатурой или джойстиком
@@ -43,7 +41,6 @@ public class FPSInputs : MonoBehaviour
             deltaY = moveJoystick.Vertical * speed;
 
             CalcPositionJoystick(position.Xposition, position.Yposition);
-            Debug.Log(playerPosition.localPosition);
         }
         else
         {
@@ -51,7 +48,6 @@ public class FPSInputs : MonoBehaviour
             deltaX = Input.GetAxis("Horizontal") * speed;
             deltaY = Input.GetAxis("Vertical") * speed;
             CalcPositionKeyboard();
-            Debug.Log(playerPosition.localPosition);
         }
 
         Vector3 movement = new Vector3(deltaX, deltaY, 0);
