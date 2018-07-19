@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
+namespace GUI{
+
 public class MoveJoystick : Joystick
 {
     [Header("Options")]
@@ -46,4 +48,5 @@ public class MoveJoystick : Joystick
         handle.anchoredPosition = Vector2.zero;
     }
 
+}
 }

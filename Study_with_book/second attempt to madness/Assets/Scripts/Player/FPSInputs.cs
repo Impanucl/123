@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GUI;
+
+namespace Player{
 
 public class FPSInputs : MonoBehaviour
 {
@@ -160,4 +163,5 @@ public class FPSInputs : MonoBehaviour
             playerPosition.localPosition = new Vector3(playerPosition.localPosition.x + posX, playerPosition.localPosition.y + posY, playerPosition.localPosition.z);
     }
 
+}
 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Player{
+
 public class OrbitCamera : MonoBehaviour {
     [SerializeField] private Transform target;
     [SerializeField] public Vector3 offsetPosition;
@@ -15,4 +17,5 @@ public class OrbitCamera : MonoBehaviour {
 	void Update () {
         transform.position = target.position + offsetPosition;
 	}
+}
 }

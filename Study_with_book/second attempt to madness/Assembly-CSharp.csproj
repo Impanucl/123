@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\GUI\MoveJoystick.cs" />
      <Compile Include="Assets\Scripts\GUI\RotationJoystick.cs" />
      <Compile Include="Assets\Scripts\GUI\WeaponTemperature.cs" />
+     <Compile Include="Assets\Scripts\Player\Fire.cs" />
      <Compile Include="Assets\Scripts\Player\FPSInputs.cs" />
      <Compile Include="Assets\Scripts\Player\OrbitCamera.cs" />
      <Compile Include="Assets\Scripts\Player\WeaponRotation.cs" />

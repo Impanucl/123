@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using Player;
+
+namespace GUI{
 
 public class RotationJoystick : Joystick
 {
@@ -7,8 +10,8 @@ public class RotationJoystick : Joystick
 
     Vector2 joystickCenter = Vector2.zero;
 
-    public float Xposition = 0;
-    public float Yposition = 0;
+    public float Xpos = 0;
+    public float Ypos = 0;
 
     void Start()
     {
@@ -29,14 +32,14 @@ public class RotationJoystick : Joystick
         handle.anchoredPosition = (inputVector * background.sizeDelta.x / 2f) * handleLimit;
 
         //передача координат джойстика для анимации поворота оружия 
-        Xposition = handle.transform.localPosition.x;
-        Yposition = handle.transform.localPosition.y;
+        Xpos = handle.transform.localPosition.x;
+        Ypos = handle.transform.localPosition.y;
     }
 
     public override void OnPointerDown(PointerEventData eventData)
     {
         background.gameObject.SetActive(true);
-       // Messenger<bool>.Broadcast(GameEvent.ON_TAP_ROTATION, background.gameObject.activeInHierarchy);
+        Messenger<bool>.Broadcast(GameEvent.ON_TAP_ROTATION, background.gameObject.activeInHierarchy);
     }
 
     public override void OnPointerUp(PointerEventData eventData)
@@ -44,7 +47,8 @@ public class RotationJoystick : Joystick
         background.gameObject.SetActive(false);
         inputVector = Vector2.zero;
         handle.anchoredPosition = Vector2.zero;
-       // Messenger<bool>.Broadcast(GameEvent.ON_TAP_ROTATION, background.gameObject.activeInHierarchy);
+        Messenger<bool>.Broadcast(GameEvent.ON_TAP_ROTATION, background.gameObject.activeInHierarchy);
     }
 
+}
 }

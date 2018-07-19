@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace GUI{
+
 public class WeaponTemperature : MonoBehaviour {
     [SerializeField] public GameObject cursor;
     private float _temperature = 0.0f;
@@ -45,4 +47,5 @@ public class WeaponTemperature : MonoBehaviour {
     {
         _temperature -= temperature;
     }
+}
 }

@@ -255,9 +255,9 @@ Camera:
     height: 3
   near clip plane: 0.5
   far clip plane: 1000
-  field of view: 60
+  field of view: 48
   orthographic: 1
-  orthographic size: 1.6016996
+  orthographic size: 1.8100461
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -279,13 +279,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 153629126}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -20}
+  m_LocalRotation: {x: -0, y: 0.0015806296, z: -0, w: 0.99999875}
+  m_LocalPosition: {x: -5.66, y: 1.98, z: -13.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0.18100001, z: 0}
 --- !u!114 &153629131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,8 +425,8 @@ MonoBehaviour:
   inputVector: {x: 0, y: 0}
   background: {fileID: 853883412}
   handle: {fileID: 784513899}
-  Xposition: 0
-  Yposition: 0
+  Xpos: 0
+  Ypos: 0
 --- !u!114 &512130112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -905,7 +905,7 @@ GameObject:
   - component: {fileID: 784513900}
   m_Layer: 5
   m_Name: Handle
-  m_TagString: Untagged
+  m_TagString: RotationHandle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1068,7 +1068,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _charController: {fileID: 1416752234}
   moveJoystick: {fileID: 74598146}
-  speed: 3
+  speed: 6
   playerSection: 0
   sprites:
   - {fileID: 21300000, guid: 38ca37c71d5bb4f04b82b9feb0d9389c, type: 3}
@@ -1079,7 +1079,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: db7f87b14c0274f94a9050e05f8fc78b, type: 3}
   - {fileID: 21300000, guid: 64e68abccd7c74beb943ec1a7828f78e, type: 3}
   - {fileID: 21300000, guid: 903331de5d2e743ef81902dfb85dad12, type: 3}
-  axes: 1
+  axes: 0
 --- !u!143 &1416752234
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1104,7 +1104,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1416752232}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.501, y: 0.307, z: -4}
+  m_LocalPosition: {x: -5, y: 2, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1517101937}
@@ -1155,6 +1155,34 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!1 &1471316518
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1471316519}
+  m_Layer: 0
+  m_Name: BulletSpawnPosition
+  m_TagString: SpawnPosition
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1471316519
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1471316518}
+  m_LocalRotation: {x: -0, y: -0, z: 0.85890967, w: 0.51212716}
+  m_LocalPosition: {x: -0.184, y: 0.291, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1517101937}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 118.38901}
 --- !u!1 &1517101936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1165,6 +1193,7 @@ GameObject:
   - component: {fileID: 1517101937}
   - component: {fileID: 1517101938}
   - component: {fileID: 1517101939}
+  - component: {fileID: 1517101940}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -1178,10 +1207,11 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1517101936}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1, y: 0.1, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.015, y: 0.185, z: -0.12}
+  m_LocalScale: {x: 1, y: 1, z: 0}
+  m_Children:
+  - {fileID: 1471316519}
   m_Father: {fileID: 1416752235}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1219,12 +1249,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 23fdce1c0d0b74b40ac5543ee54cc4cb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5e304da0c2a344ce69b2dce7cf422582, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.64, y: 0.64}
+  m_Size: {x: 0.8, y: 0.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1241,22 +1271,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
-  - {fileID: 21300000, guid: 0e5b75bb826fcc545b75afb6425da32f, type: 3}
-  - {fileID: 21300000, guid: b3e1bf0cfba868b40a52e8b9dbb68c47, type: 3}
-  - {fileID: 21300000, guid: 8abfaef133611e049944293e3af7bb55, type: 3}
-  - {fileID: 21300000, guid: 23fdce1c0d0b74b40ac5543ee54cc4cb, type: 3}
-  - {fileID: 21300000, guid: 97d7017209326d84ebe5359c657b1178, type: 3}
-  - {fileID: 21300000, guid: f0fa16920529341419a27df7694eb364, type: 3}
-  - {fileID: 21300000, guid: deed2d4339846a349ae574d995753608, type: 3}
-  - {fileID: 21300000, guid: 729b5662744e5f247b353191496b7877, type: 3}
-  - {fileID: 21300000, guid: 6db0289490bc54e43be738ffefff13d0, type: 3}
-  - {fileID: 21300000, guid: e629b53449bbf7b4598ceddc48b1ea6b, type: 3}
-  - {fileID: 21300000, guid: ab30c30640f50724e9b0d23ea031bd73, type: 3}
-  - {fileID: 21300000, guid: 6c455c21d2a41a948b97345249a6506c, type: 3}
+  - {fileID: 21300000, guid: d2e8bb20f5c6a4d22a1b944443b6c6b7, type: 3}
+  - {fileID: 21300000, guid: 449f2f1f8933d4d2aae078592b8b3f02, type: 3}
+  - {fileID: 21300000, guid: 439ddda1ee47d40e5a5ce640286a6a15, type: 3}
+  - {fileID: 21300000, guid: 5e304da0c2a344ce69b2dce7cf422582, type: 3}
+  - {fileID: 21300000, guid: 9da812c55603242f391ac1c967b62549, type: 3}
+  - {fileID: 21300000, guid: 6624638af385c4727aedd6caf9d77b40, type: 3}
+  - {fileID: 21300000, guid: 4326187f8528547cfb17f3a1a0a49652, type: 3}
+  - {fileID: 21300000, guid: 7e89cb2f988a3442b9630af59c0abf10, type: 3}
+  - {fileID: 21300000, guid: 2715c14f85f01425ab0e8e5c5f7a8e30, type: 3}
+  - {fileID: 21300000, guid: d8b37e8c96bc74107835e51036c7f999, type: 3}
+  - {fileID: 21300000, guid: 45f8c8e9a993046e7aafdfc6841b4657, type: 3}
+  - {fileID: 21300000, guid: 4ff9dba56e455427e8dba2afccfbf09f, type: 3}
   rotationJoystick: {fileID: 512130111}
+  spawnBulletPosition: {fileID: 1471316518}
   playerSection: 3
-  shiftX: -0.1
-  shiftY: -0.15
+  shiftX: 0
+  shiftY: 0
+--- !u!114 &1517101940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1517101936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8b09821180d04dd5a8b29bed1112f13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPosition: {fileID: 1471316518}
+  bulletPrefab: {fileID: 1787026739432184, guid: a30d24b6457fc406db15bb20a5c38eb3,
+    type: 2}
+  rotationJoystick: {fileID: 512130111}
+  speed: 150
+  intervalGun: 0.3
 --- !u!1 &1717060800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1324,7 +1372,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1717060800}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.014, y: -1.338, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
