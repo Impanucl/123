@@ -6,6 +6,11 @@ TagManager:
   tags:
   - RotationHandle
   - SpawnPosition
+  - Enemy
+  - MyPlayer
+  - EnemyBase
+  - PlayerBase
+  - TowerPlayer
   layers:
   - Default
   - TransparentFX

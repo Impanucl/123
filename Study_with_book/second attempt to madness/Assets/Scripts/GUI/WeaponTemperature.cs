@@ -17,20 +17,17 @@ public class WeaponTemperature : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-    }
-
-    void OnGUI()
-    {
-        if ((_temperature > maxTemperature) && (_temperature < minTemperature))
-        {
-            cursor.transform.rotation = Quaternion.Euler(0, 0, _temperature);
-            _temperature += cooling * Time.deltaTime;
-        } else if (_temperature < maxTemperature)
-        {
-            _temperature += cooling * Time.deltaTime;
-            Messenger.Broadcast(GameEvent.ON_TEMPERATURE_COOLING);
-        }
+	void Update ()
+		{
+			if ((_temperature > maxTemperature) && (_temperature < minTemperature))
+			{
+				cursor.transform.rotation = Quaternion.Euler(0, 0, _temperature);
+				_temperature += cooling * Time.deltaTime;
+			} else if (_temperature < maxTemperature)
+			{
+				_temperature += cooling * Time.deltaTime;
+				Messenger.Broadcast(GameEvent.ON_TEMPERATURE_COOLING);
+			}
     }
 
     void Awake()
