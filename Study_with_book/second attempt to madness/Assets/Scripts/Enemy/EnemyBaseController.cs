@@ -16,13 +16,14 @@ namespace Enemy{
 		[SerializeField] public float intervalSpawnToPlayerBase = 1.0f;
 		[SerializeField] private float _intervalSpawnToPlayerBase;
 		[SerializeField] public int countEnemiesSpawn = 25;
-		[SerializeField] private int _countEnemiesSpawn;
+		[SerializeField] public List<GameObject> enemyCount;
 		[SerializeField] public bool walkToPlayerBase = false;
+
+		[SerializeField] public GameObject GameOverMenu;
 
 		// Use this for initialization
 		void Start () {
 			_intervalSpawn = intervalSpawn;
-			_countEnemiesSpawn = countEnemiesSpawn;
 			_intervalSpawnToPlayerBase = intervalSpawnToPlayerBase;
 		}
 		
@@ -41,13 +42,14 @@ namespace Enemy{
 		}
 
 		public void spawnEnemy(){
-			if (_countEnemiesSpawn >= 1 && _intervalSpawn <= 0)
+			if (enemyCount.Count <= countEnemiesSpawn && _intervalSpawn <= 0)
 			{
 				
 				enemy = Instantiate (EnemyPrefab, spawnPosition, transform.rotation) as GameObject;
 				enemy.GetComponent<EnemyController> ().setEnemyBase (gameObject);
+				enemy.GetComponent<EnemyController> ().gameOverMenu = GameOverMenu;
 				_intervalSpawn = intervalSpawn;
-				_countEnemiesSpawn--;
+				enemyCount.Add (enemy);
 			}
 		}
 
@@ -57,13 +59,9 @@ namespace Enemy{
 				enemy = Instantiate (EnemyPrefab, spawnPosition, transform.rotation) as GameObject;
 				enemy.GetComponent<EnemyController> ().setPlayerBase (PlayerBase);
 				enemy.GetComponent<EnemyController> ().setWalkToPlayerBase (walkToPlayerBase);
+				enemy.GetComponent<EnemyController> ().gameOverMenu = GameOverMenu;
 				_intervalSpawnToPlayerBase = intervalSpawnToPlayerBase;
 			}
-		}
-
-		public void updateCountEnemySpawn ()
-		{
-			_countEnemiesSpawn++;
 		}
 
 	}

@@ -9,6 +9,7 @@ namespace Player{
 
 		public float damage = 0.0f;
 		public float timeLife = 0.0f;
+		public List<GameObject> damageObjects;
 
 		// Use this for initialization
 		void Start () {
@@ -26,13 +27,18 @@ namespace Player{
 
 		void OnTriggerEnter2D(Collider2D other) {
 
-			if (other.tag == "Enemy") 
-			{
-				other.GetComponent<EnemyHP>().TakeDamage(damage);
-				Destroy (this.gameObject);
+			if (other.tag == "Enemy") {
+				
+				damageObjects.Add (other.gameObject);
+
+				if (damageObjects.Count >= 1) {
+					
+					damageObjects [0].GetComponent<EnemyHP> ().TakeDamage (damage);
+
+					Destroy (this.gameObject);
+				}
 
 			}
-
 		}
 
 }

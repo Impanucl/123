@@ -52,15 +52,12 @@ namespace Player{
 	        }
 
 				//движение игрока
-	        Vector3 movement = new Vector3(deltaX, deltaY, 0);
-	        movement = Vector3.ClampMagnitude(movement, speed);
+	        Vector3 movement = new Vector2(deltaX, deltaY);
+	        movement = Vector2.ClampMagnitude(movement, speed);
 	        movement *= Time.deltaTime;
 
 	        if (deltaX != 0 || deltaY != 0)
 	        {
-	            //эти строки позволяют при движении поворачивать корпус плейера, для 3d 
-	            //	Quaternion look = Quaternion.LookRotation(movement);
-	            //	transform.rotation = Quaternion.Slerp(transform.rotation, look, Time.deltaTime * speed/5);
 	            _charController.Move(movement);
 	        }
 	    }

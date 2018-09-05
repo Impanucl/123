@@ -26,7 +26,6 @@ namespace PlayerObjects{
 
 		}
 
-
 		void Update () 
 		{
 			_intervalGun -= Time.deltaTime;

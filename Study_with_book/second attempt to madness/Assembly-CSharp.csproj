@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\Enemy\EnemyBaseController.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyController.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyHP.cs" />
+     <Compile Include="Assets\Scripts\Enemy\RadiusCollider.cs" />
      <Compile Include="Assets\Scripts\Game\GameEvent.cs" />
      <Compile Include="Assets\Scripts\Game\Messenger.cs" />
      <Compile Include="Assets\Scripts\GUI\Joystick.cs" />
@@ -65,8 +66,10 @@
      <Compile Include="Assets\Scripts\Player\BulletFire.cs" />
      <Compile Include="Assets\Scripts\Player\FPSInputs.cs" />
      <Compile Include="Assets\Scripts\Player\OrbitCamera.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerHP.cs" />
      <Compile Include="Assets\Scripts\Player\ShotGunFire.cs" />
      <Compile Include="Assets\Scripts\Player\WeaponRotation.cs" />
+     <Compile Include="Assets\Scripts\PlayerObjects\PlayerObjectHP.cs" />
      <Compile Include="Assets\Scripts\PlayerObjects\TowerController.cs" />
  <Reference Include="UnityEngine.UIAutomation">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UIAutomation/UnityEngine.UIAutomation.dll</HintPath>

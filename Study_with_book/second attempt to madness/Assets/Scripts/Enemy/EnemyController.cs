@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using PlayerObjects;
+using Player;
+using GUI;
 
 namespace Enemy{
 
@@ -13,23 +15,42 @@ namespace Enemy{
 		[SerializeField] public float waitTimeToNewPosition = 9.0f;
 		[SerializeField] private float _waitTimeToNewPosition;
 		[SerializeField] public Vector2 newPosEnemy;
-		[SerializeField] public bool findPlayer = false;
-		[SerializeField] private GameObject PlayerPosition;
+		[SerializeField] private GameObject PlayerObject;
 		[SerializeField] public float distance = 4.0f;
 		[SerializeField] public float realDistance;
 		[SerializeField] public GameObject playerBase;
 		[SerializeField] public Vector2 playerBasePos;
 		[SerializeField] public bool walkToPlayerBase = false;
+		[SerializeField] public bool findPlayer = false;
+		[SerializeField] public bool damageTargetObject = false;
+
+		[SerializeField] public float damage = 10f;
+		[SerializeField] public float intervalToDamage = 1.0f;
+		[SerializeField] public float _intervalToDamage;
+
+		[SerializeField] public float objectDistance = 0.5f;
+		[SerializeField] public float _objectDistance;
+
+		[SerializeField] public List<GameObject> Objects;
 
 		private Vector2 PlayerPos;
 		[SerializeField] public int enemySection = 1;
 		[SerializeField] public Sprite[] enemySprites = new Sprite[8];
 
+		[SerializeField] public GameObject gameOverMenu;
+
+
+		[SerializeField] public List<GameObject> playerBaseObjects;
+		[SerializeField] public GameObject newBasePlayerObject;
+
+		[SerializeField] public float newDistance = 0.0f;
+		[SerializeField] public float minNewDistance = 0.0f;
 
 		// Use this for initialization
 		void Start () {
-			moveEnemy(findPlayer, walkToPlayerBase);
-			PlayerPosition = GameObject.FindWithTag ("MyPlayer");
+			moveEnemy(findPlayer, walkToPlayerBase, damageTargetObject);
+			PlayerObject = GameObject.FindWithTag ("MyPlayer");
+			_intervalToDamage = intervalToDamage;
 		}
 
 		// Update is called once per frame
@@ -37,47 +58,100 @@ namespace Enemy{
 			SetPlayerPos ();
 			setPlayerDistance ();
 			calcFindPlayer (realDistance);
-			moveEnemy(findPlayer, walkToPlayerBase);
+			moveEnemy(findPlayer, walkToPlayerBase, damageTargetObject);
+			findPlayerObjectToDamage ();
 		}
 
-		public void GetBasePos(){
+		public void findPlayerObjectToDamage()
+		{
+			
+			if (Objects.Count > 0) {
+
+				_intervalToDamage -= Time.deltaTime;
+				_objectDistance = calcDistanceObject (Objects [0]);
+
+				if (_objectDistance <= objectDistance) {
+					
+					damageTargetObject = true;
+
+					if (_intervalToDamage < 0.0f) {
+						damagePlayerObjects (Objects [0], damage, false);
+						_intervalToDamage = intervalToDamage;
+					}
+				} 
+			}
+
+			if (realDistance <= objectDistance) {
+				_intervalToDamage -= Time.deltaTime;
+				damageTargetObject = true;
+	
+				if (_intervalToDamage < 0.0f) {
+					damagePlayerObjects (PlayerObject, damage, true);
+					_intervalToDamage = intervalToDamage;
+				}
+			} else {
+				//damageTargetObject = false;
+			}
+		}
+
+		public void damagePlayerObjects(GameObject damageTarget, float damagePoint, bool isDamagePlayer)
+		{
+			if (!isDamagePlayer) 
+			{
+				damageTarget.GetComponent<PlayerObjectHP> ().TakeDamage (damagePoint);
+			}
+			else 
+			{
+				damageTarget.GetComponent<PlayerHP> ().TakeDamage (damagePoint);
+			}
+
+		}
+
+		public void GetBasePos()
+		{
 			enemyBasePos = new Vector2 (enemyBase.transform.position.x, enemyBase.transform.position.y);
 		}
 
-		public void moveEnemy(bool isPlayer, bool isWalkToPlayerBase)
+		public void moveEnemy(bool isPlayer, bool isWalkToPlayerBase, bool isDamageTargetObject)
 		{
-			if (!isWalkToPlayerBase) {
-				if (!isPlayer) {
-					_waitTimeToNewPosition -= Time.deltaTime;
-					if (_waitTimeToNewPosition <= 0) {
-						GetBasePos ();
-						newPosEnemy = (Random.insideUnitCircle) * radiusEnemy; // переделать на учет базы
-						newPosEnemy = new Vector2 (enemyBasePos.x + newPosEnemy.x, enemyBasePos.y + newPosEnemy.y);
-						_waitTimeToNewPosition = waitTimeToNewPosition;
-					}
-					this.transform.TransformDirection (newPosEnemy);
-					this.transform.position = Vector2.MoveTowards (transform.position, newPosEnemy, speed * Time.deltaTime);
-					CalcPositionJoystick (newPosEnemy.x - transform.position.x, newPosEnemy.y - transform.position.y);
-				} else if (isPlayer) {
-					this.transform.TransformDirection (PlayerPos);
-					this.transform.position = Vector2.MoveTowards (transform.position, PlayerPos, speed * Time.deltaTime);
-					CalcPositionJoystick (PlayerPos.x - transform.position.x, PlayerPos.y - transform.position.y);
-				} 
-			}
-			if (isWalkToPlayerBase) {
+			if (!isDamageTargetObject) {
+				if (!isWalkToPlayerBase) {
+					if (!isPlayer) {
+						_waitTimeToNewPosition -= Time.deltaTime;
+						if (_waitTimeToNewPosition <= 0) {
+							GetBasePos ();
+							newPosEnemy = (Random.insideUnitCircle) * radiusEnemy; // переделать на учет базы
+							newPosEnemy = new Vector2 (enemyBasePos.x + newPosEnemy.x, enemyBasePos.y + newPosEnemy.y);
+							_waitTimeToNewPosition = waitTimeToNewPosition;
+						}
+						transfortDirection (newPosEnemy);
+					} else if (isPlayer) {
+						transfortDirection (PlayerPos);
+					} 
+				}
+				if (isWalkToPlayerBase) {
 				
-				if (!isPlayer) {
-					getPlayerBasePos ();
-					this.transform.TransformDirection (playerBasePos);
-					this.transform.position = Vector2.MoveTowards (transform.position, playerBasePos, speed*2 * Time.deltaTime);
-					CalcPositionJoystick (playerBasePos.x - transform.position.x, playerBasePos.y - transform.position.y);
-				} else if (isPlayer) {
-					this.transform.TransformDirection (PlayerPos);
-					this.transform.position = Vector2.MoveTowards (transform.position, PlayerPos, speed * Time.deltaTime);
-					CalcPositionJoystick (PlayerPos.x - transform.position.x, PlayerPos.y - transform.position.y);
+					if (!isPlayer) {
+						if (Objects.Count > 0) {
+							Vector2 TowerPos = new Vector2 (Objects [0].transform.position.x, Objects [0].transform.position.y);
+							transfortDirection (TowerPos);
+						} else {
+							getPlayerBasePos ();
+							transfortDirection (playerBasePos);
+						}
+					} else if (isPlayer) {
+						transfortDirection (PlayerPos);
+					}
 				}
 			}
 
+		}
+
+		public void transfortDirection(Vector2 targetPos)
+		{
+			this.transform.TransformDirection (targetPos);
+			this.transform.position = Vector2.MoveTowards (transform.position, targetPos, speed * Time.deltaTime);
+			CalcPositionJoystick (targetPos.x - transform.position.x, targetPos.y - transform.position.y);
 		}
 
 		//вычисление плоскости для поворота персонажа джойстиком
@@ -149,7 +223,7 @@ namespace Enemy{
 
 		public void setPlayerDistance()	
 		{
-			Vector2 distanceVector = new Vector2 (PlayerPosition.transform.position.x - transform.position.x, PlayerPosition.transform.position.y - transform.position.y); 
+			Vector2 distanceVector = new Vector2 (PlayerObject.transform.position.x - transform.position.x, PlayerObject.transform.position.y - transform.position.y); 
 			realDistance = Mathf.Sqrt (Mathf.Pow(distanceVector.x,2) + Mathf.Pow(distanceVector.y,2));
 		}
 
@@ -160,22 +234,61 @@ namespace Enemy{
 				findPlayer = true;
 			}
 		}
+			
+		public float calcDistanceObject(GameObject firstObject) 
+		{	
+			Vector2 distanceVector = new Vector2 (firstObject.transform.position.x - transform.position.x, firstObject.transform.position.y - transform.position.y); 
+			float distanceToNextObject = Mathf.Sqrt (Mathf.Pow(distanceVector.x,2) + Mathf.Pow(distanceVector.y,2));
+
+			return distanceToNextObject;
+		}
+
 
 		public void SetPlayerPos()
+		{ 
+			PlayerPos = new Vector2 (PlayerObject.transform.position.x, PlayerObject.transform.position.y);
+		}
+
+		public void getPlayerBasePos()
 		{
-			PlayerPos = new Vector2 (PlayerPosition.transform.position.x, PlayerPosition.transform.position.y);
+			if (playerBase == null) {
+				FindNewPlayerBase ();
+			} else {
+				playerBasePos = new Vector2 (playerBase.transform.position.x, playerBase.transform.position.y);
+			}
 		}
+			
+		public void FindNewPlayerBase()
+		{
+			if (GameObject.FindGameObjectsWithTag ("PlayerBase").Length == 0) 
+			{
+				gameOverMenu.GetComponent<PauseController> ().SetTimeScale (true);
+				enabled = false;
+			} 
+			else 
+			{
+				playerBaseObjects.AddRange (GameObject.FindGameObjectsWithTag ("PlayerBase"));
 
-		public void getPlayerBasePos(){
-			playerBasePos = new Vector2 (playerBase.transform.position.x, playerBase.transform.position.y);
-		}
+				newDistance = 0.0f;
 
-		public void updateCountEnemyToSpawn(){
-			if (!walkToPlayerBase) {
-				enemyBase.GetComponent<EnemyBaseController> ().updateCountEnemySpawn ();
+				minNewDistance = calcDistanceObject (playerBaseObjects [0]);
+
+				foreach (GameObject value in playerBaseObjects) {
+					newDistance = calcDistanceObject (value);
+					if (minNewDistance >= newDistance) {
+						newBasePlayerObject = value;
+					}
+				}
+
+				if (playerBaseObjects [0] == null) {
+					playerBaseObjects.RemoveAt (0);
+				}
+
+				playerBaseObjects.Clear ();
+				playerBase = newBasePlayerObject;
 			}
 		}
 
-			
 	}
 }
+                                                                                                                                                                                 

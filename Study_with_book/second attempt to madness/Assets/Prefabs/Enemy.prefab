@@ -30,6 +30,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1581483852856930
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4122137610250006}
+  - component: {fileID: 58295939854578118}
+  - component: {fileID: 114745098384156172}
+  m_Layer: 0
+  m_Name: FindRadiusCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4122137610250006
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1581483852856930}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4649988586543646}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4649988586543646
 Transform:
   m_ObjectHideFlags: 1
@@ -37,12 +67,28 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1580392319271988}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.6571436, y: 2.5979307, z: -5}
+  m_LocalPosition: {x: 7.00651, y: -5.715835, z: -5}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4122137610250006}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &58295939854578118
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1581483852856930}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 4
 --- !u!61 &61003670955893844
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -81,18 +127,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyBase: {fileID: 0}
   enemyBasePos: {x: 1.99, y: 7.37}
-  speed: 1
+  speed: 10
   radiusEnemy: 2
   waitTimeToNewPosition: 4
   _waitTimeToNewPosition: 0
   newPosEnemy: {x: 0, y: 0}
-  findPlayer: 0
-  PlayerPosition: {fileID: 0}
+  PlayerObject: {fileID: 0}
   distance: 4
   realDistance: 1.9832586
   playerBase: {fileID: 0}
   playerBasePos: {x: 0, y: 0}
   walkToPlayerBase: 0
+  findPlayer: 0
+  damageTargetObject: 0
+  damage: 10
+  intervalToDamage: 1
+  _intervalToDamage: 0
+  objectDistance: 0.5
+  _objectDistance: 0
+  Objects: []
   enemySection: 1
   enemySprites:
   - {fileID: 21300000, guid: 38ca37c71d5bb4f04b82b9feb0d9389c, type: 3}
@@ -103,6 +156,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: db7f87b14c0274f94a9050e05f8fc78b, type: 3}
   - {fileID: 21300000, guid: 64e68abccd7c74beb943ec1a7828f78e, type: 3}
   - {fileID: 21300000, guid: 903331de5d2e743ef81902dfb85dad12, type: 3}
+  gameOverMenu: {fileID: 0}
+  playerBaseObjects: []
+  newBasePlayerObject: {fileID: 0}
+  newDistance: 0
+  minNewDistance: 0
 --- !u!114 &114341082503282760
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -115,6 +173,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healPoint: 100
+  isBase: 0
+--- !u!114 &114745098384156172
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1581483852856930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d97e8da54326a49df8289cf4add280aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212628795815696834
 SpriteRenderer:
   m_ObjectHideFlags: 1
