@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayerObjects;
 using Player;
-using GUI;
+using MYGUI;
 
 namespace Enemy{
 
@@ -89,27 +89,35 @@ namespace Enemy{
 					damagePlayerObjects (PlayerObject, damage, true);
 					_intervalToDamage = intervalToDamage;
 				}
-			} else {
-				//damageTargetObject = false;
-			}
+            }
+            if (realDistance >= objectDistance)
+            {
+                damageTargetObject = false;
+            }
 		}
 
 		public void damagePlayerObjects(GameObject damageTarget, float damagePoint, bool isDamagePlayer)
 		{
-			if (!isDamagePlayer) 
-			{
-				damageTarget.GetComponent<PlayerObjectHP> ().TakeDamage (damagePoint);
-			}
-			else 
-			{
-				damageTarget.GetComponent<PlayerHP> ().TakeDamage (damagePoint);
-			}
+           // if (!findPlayer)
+           // {
+                if (!isDamagePlayer)
+                {
+                    damageTarget.GetComponent<PlayerObjectHP>().TakeDamage(damagePoint);
+                }
+                else
+                {
+                    damageTarget.GetComponent<PlayerHP>().TakeDamage(damagePoint);
+                }
+            //}
 
 		}
 
 		public void GetBasePos()
 		{
-			enemyBasePos = new Vector2 (enemyBase.transform.position.x, enemyBase.transform.position.y);
+            if (enemyBase != null)
+            {
+                enemyBasePos = new Vector2(enemyBase.transform.position.x, enemyBase.transform.position.y);
+            }
 		}
 
 		public void moveEnemy(bool isPlayer, bool isWalkToPlayerBase, bool isDamageTargetObject)
@@ -242,7 +250,6 @@ namespace Enemy{
 
 			return distanceToNextObject;
 		}
-
 
 		public void SetPlayerPos()
 		{ 

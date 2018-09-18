@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using Player;
 
-namespace GUI{
+namespace MYGUI{
 
 	public class RotationJoystick : Joystick
 	{

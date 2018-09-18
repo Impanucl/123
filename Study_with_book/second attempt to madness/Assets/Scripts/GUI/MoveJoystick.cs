@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace GUI{
+namespace MYGUI{
 
 	public class MoveJoystick : Joystick
 	{

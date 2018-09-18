@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GUI{
+namespace MYGUI{
 
 	public class PauseController : MonoBehaviour {
 

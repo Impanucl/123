@@ -7,16 +7,22 @@ namespace PlayerObjects{
 
 	public class TowerController : MonoBehaviour {
 
-		public List<GameObject> enemyTargetList;
-		public Sprite[] gunSprites = new Sprite[12];
+        [SerializeField] public List<GameObject> enemyTargetList;
+        [SerializeField] public Sprite[] gunSprites = new Sprite[12];
 		[SerializeField] public GameObject spawnBulletPosition;
 		private GameObject bullet;
 		[SerializeField] private GameObject bulletPrefab;
-		public float damage = 0.0f;
-		public float lifeTime = 3.0f;
-		public float speed = 10.0f;
-		public float intervalGun = 0.3f;
-		private float _intervalGun;
+        [SerializeField] public float damage = 0.0f;
+        [SerializeField] public float lifeTime = 3.0f;
+        [SerializeField] public float speed = 10.0f;
+        [SerializeField] public float intervalGun = 0.3f;
+
+        [SerializeField] public int countGunFire = 3;
+        [SerializeField] public float intervalGunAfterFire = 2f;
+
+        [SerializeField] private int   _countGunFire = 0;
+        [SerializeField] private float _intervalGunAfterFire;
+        private float _intervalGun;
 		private float corner;
 
 		public int playerSection = 4;
@@ -26,9 +32,10 @@ namespace PlayerObjects{
 
 		}
 
-		void Update () 
+		void FixedUpdate () 
 		{
-			_intervalGun -= Time.deltaTime;
+            _intervalGunAfterFire -= Time.deltaTime;
+            _intervalGun -= Time.deltaTime;
 			getTargetAndFire ();
 		}
 
@@ -136,16 +143,27 @@ namespace PlayerObjects{
 	
 		public void getTargetAndFire()
 		{
-			if (enemyTargetList.Count > 0)
-			{
-				CalcPositionJoystick(enemyTargetList[0].transform.position.x - transform.position.x, enemyTargetList[0].transform.position.y - transform.position.y);
-				corner = 90 - Mathf.Atan2 (enemyTargetList[0].transform.position.x - transform.position.x, enemyTargetList[0].transform.position.y - transform.position.y) * Mathf.Rad2Deg;
-				if (_intervalGun < 0.0f)
-				{
-					spawnBullet ();
-				}
-			}
-		}
+            if (enemyTargetList.Count > 0 && _intervalGunAfterFire < 0)
+            {
+                if (_countGunFire <= countGunFire)
+                {
+                    CalcPositionJoystick(enemyTargetList[0].transform.position.x - transform.position.x, enemyTargetList[0].transform.position.y - transform.position.y);
+                    corner = 90 - Mathf.Atan2(enemyTargetList[0].transform.position.x - transform.position.x, enemyTargetList[0].transform.position.y - transform.position.y) * Mathf.Rad2Deg;
+                    if (_intervalGun < 0.0f)
+                    {
+                        spawnBullet();
+                    }
+                    if (_countGunFire == countGunFire)
+                    {
+                        _intervalGunAfterFire = intervalGunAfterFire;
+                        _countGunFire = 0;
+                    }
+                }
+
+            }
+
+
+        }
 
 		//создание пули и добавление ей импулса
 		private void spawnBullet()
@@ -153,7 +171,8 @@ namespace PlayerObjects{
 			bullet = Instantiate(bulletPrefab, spawnBulletPosition.transform.position, transform.rotation) as GameObject; 		 // создание пули
 			bullet.transform.rotation = Quaternion.Euler(0,0,corner);													     // направление пули
 			bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * speed * Time.deltaTime,ForceMode2D.Impulse);// ускорение пули физическим свойством
-			_intervalGun = intervalGun;																						 // задержка перед выстрелами									 // отправка коэффициента перегрева
+			_intervalGun = intervalGun;
+            _countGunFire++;
 			SetBulletParameters(damage, lifeTime);
 		}
 
