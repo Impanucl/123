@@ -9,12 +9,14 @@ namespace Player{
 	{
 	    [SerializeField] private CharacterController _charController;
 	    [SerializeField] public Joystick moveJoystick;
+        [SerializeField] public Animator playerAnimator;
+        [SerializeField] public int isRunSection = 0;
 
 	    public float speed = 6.0f;
 	    private float deltaX = 0;
 	    private float deltaY = 0;
+        private bool isRun = false;
 	    public int playerSection = 1;
-	    public Sprite[] playerSprites = new Sprite[8];
 
 	    //управление клавиатурой или джойстиком
 	    public enum moveAxes
@@ -27,7 +29,8 @@ namespace Player{
 
 	    void Start()
 	    {
-	        _charController = GetComponent<CharacterController>();
+            playerAnimator = GetComponent<Animator>();
+            _charController = GetComponent<CharacterController>();
 	    }
 
 	    //движение персонажа
@@ -51,8 +54,19 @@ namespace Player{
 	            CalcPositionKeyboard();
 	        }
 
-				//движение игрока
-	        Vector3 movement = new Vector2(deltaX, deltaY);
+            if (deltaX != 0 || deltaY != 0)
+            {
+                isRun = true;
+            }
+            if (deltaX == 0 && deltaY == 0)
+            {
+                isRun = false;
+            }
+
+            playerAnimator.SetBool("isRun", isRun);
+
+            //движение игрока
+            Vector3 movement = new Vector2(deltaX, deltaY);
 	        movement = Vector2.ClampMagnitude(movement, speed);
 	        movement *= Time.deltaTime;
 
@@ -61,6 +75,15 @@ namespace Player{
 	            _charController.Move(movement);
 	        }
 	    }
+
+        public void calkRunSection(int section){
+            if (isRun == true)
+            {
+                playerAnimator.SetInteger("isRunSection", section);
+            } else {
+                playerAnimator.SetInteger("isRunSection", 9);
+            }
+        }
 
 			//вычисление плоскости для поворота персонажа джойстиком
 	    public void CalcPositionJoystick(float positionX, float positionY)
@@ -105,9 +128,10 @@ namespace Player{
 	        {
 	            playerSection = 7;
 	        }
-
-			GetComponent<SpriteRenderer>().sprite = playerSprites[playerSection];
-	    }
+            playerAnimator.SetInteger("sprite", playerSection);
+           
+            calkRunSection(playerSection);
+        }
 
 		//вычисление плоскости для поворота персонажа клавиатурой
 	    public void CalcPositionKeyboard()
@@ -151,8 +175,9 @@ namespace Player{
 	        {
 	            playerSection = 7;
 	        }
+            playerAnimator.SetInteger("sprite", playerSection);
 
-			GetComponent<SpriteRenderer>().sprite = playerSprites[playerSection];
-	    }
+            calkRunSection(playerSection);
+        }
 }
 }

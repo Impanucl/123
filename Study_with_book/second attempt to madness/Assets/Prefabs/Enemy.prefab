@@ -67,8 +67,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1580392319271988}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.00651, y: -5.715835, z: -5}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalPosition: {x: 3.192727, y: -3.9704795, z: -5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4122137610250006}
   m_Father: {fileID: 0}
@@ -101,18 +101,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.1, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.6, y: 1.6}
+    oldSize: {x: 1.6, y: 1.08}
     newSize: {x: 0.8, y: 0.8}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 0.7}
   m_EdgeRadius: 0
 --- !u!114 &114025418533251048
 MonoBehaviour:
@@ -143,19 +143,19 @@ MonoBehaviour:
   damage: 10
   intervalToDamage: 1
   _intervalToDamage: 0
-  objectDistance: 0.5
+  objectDistance: 0.7
   _objectDistance: 0
   Objects: []
   enemySection: 1
   enemySprites:
-  - {fileID: 21300000, guid: 38ca37c71d5bb4f04b82b9feb0d9389c, type: 3}
-  - {fileID: 21300000, guid: 72e7709642b46443e96fa61a35a3c652, type: 3}
-  - {fileID: 21300000, guid: c9d373888456a4d70978f9b72e26e442, type: 3}
-  - {fileID: 21300000, guid: d3b2b0ceea0ed4202aa6b6970f67a81d, type: 3}
-  - {fileID: 21300000, guid: 2497985be26a94750ae5d18e72470134, type: 3}
-  - {fileID: 21300000, guid: db7f87b14c0274f94a9050e05f8fc78b, type: 3}
-  - {fileID: 21300000, guid: 64e68abccd7c74beb943ec1a7828f78e, type: 3}
-  - {fileID: 21300000, guid: 903331de5d2e743ef81902dfb85dad12, type: 3}
+  - {fileID: 21300000, guid: ffcb69925fb874ec58176d00e2de7e9e, type: 3}
+  - {fileID: 21300000, guid: cef8850504f3f461296115bd0cca311c, type: 3}
+  - {fileID: 21300000, guid: 36a0de10aa16a451fbaf0f266f2ee90c, type: 3}
+  - {fileID: 21300000, guid: 4914116940e8c417c82c869e248d3eea, type: 3}
+  - {fileID: 21300000, guid: 2f65b3433a2114e7680afa8a211ad12f, type: 3}
+  - {fileID: 21300000, guid: 6304c3a4e93e740ffba971b00ead164d, type: 3}
+  - {fileID: 21300000, guid: 593a1025f42e049638f8d3deef8ba37b, type: 3}
+  - {fileID: 21300000, guid: 4fbdbe39cdc734f9bb696fb27cff59c7, type: 3}
   gameOverMenu: {fileID: 0}
   playerBaseObjects: []
   newBasePlayerObject: {fileID: 0}
@@ -174,6 +174,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healPoint: 100
   isBase: 0
+  timeToRegeneration: 0
+  healthPerSecond: 0
+  _timeToRegeneration: 0
+  _healPoint: 1231
 --- !u!114 &114745098384156172
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -220,7 +224,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 38ca37c71d5bb4f04b82b9feb0d9389c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ffcb69925fb874ec58176d00e2de7e9e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

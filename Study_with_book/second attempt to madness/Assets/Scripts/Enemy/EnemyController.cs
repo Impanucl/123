@@ -71,7 +71,6 @@ namespace Enemy{
 				_objectDistance = calcDistanceObject (Objects [0]);
 
 				if (_objectDistance <= objectDistance) {
-					
 					damageTargetObject = true;
 
 					if (_intervalToDamage < 0.0f) {
@@ -81,7 +80,7 @@ namespace Enemy{
 				} 
 			}
 
-			if (realDistance <= objectDistance) {
+            if ((realDistance <= objectDistance) && findPlayer == true) {
 				_intervalToDamage -= Time.deltaTime;
 				damageTargetObject = true;
 	
@@ -89,8 +88,9 @@ namespace Enemy{
 					damagePlayerObjects (PlayerObject, damage, true);
 					_intervalToDamage = intervalToDamage;
 				}
-            }
-            if (realDistance >= objectDistance)
+            } else 
+
+            if (realDistance >= objectDistance && findPlayer == true)
             {
                 damageTargetObject = false;
             }

@@ -20,103 +20,105 @@ namespace PlayerObjects{
         [SerializeField] public int countGunFire = 3;
         [SerializeField] public float intervalGunAfterFire = 2f;
 
+        [SerializeField] public Animator towerAnimator;
+
         [SerializeField] private int   _countGunFire = 0;
         [SerializeField] private float _intervalGunAfterFire;
-        private float _intervalGun;
+        [SerializeField] public int isFire = 0;
+        [SerializeField] private float _intervalGun;
 		private float corner;
 
 		public int playerSection = 4;
 
 		void Start () 
 		{
-
-		}
+            towerAnimator = GetComponent<Animator>();
+        }
 
 		void FixedUpdate () 
 		{
             _intervalGunAfterFire -= Time.deltaTime;
             _intervalGun -= Time.deltaTime;
 			getTargetAndFire ();
-		}
+        }
 
-
-		//вычисление плоскости для поворота оружия джойстиком 
-		public void CalcPositionJoystick(float positionX, float positionY)
+        //вычисление плоскости для поворота оружия джойстиком 
+        public void CalcPositionJoystick(float positionX, float positionY)
 		{
 			if ((positionY > 0) && (positionX > -positionY / 3) && (positionX < positionY / 3))
 			{
 				playerSection = 0;
-				SetPosition(-0.024F , 0.341F);
+				SetPosition(-0.079F, 0.306F);
 			}
 
 			if ((positionY > 0) && (positionX > positionY / 3) && (positionX < positionY))
 			{
 				playerSection = 1;
-				SetPosition(0.189F, 0.228F);
+				SetPosition(0.109F, 0.258F);
 			}
 
 			if ((positionY > 0) && (positionX > positionY) && (positionX < positionY * 3))
 			{
 				playerSection = 2;
-				SetPosition(0.258F, 0.146F);
+				SetPosition(0.229F, 0.17F);
 			}
 
 			if ((positionX > 0) && (positionY > -positionX / 3) && (positionY < positionX / 3))
 			{
 				playerSection = 3;
-				SetPosition(0.384F, -0.0025F);
+				SetPosition(0.295F, 0.029F);
 			}
 
 			if ((positionX > 0) && (positionY > -positionX) && (positionY < -positionX / 3))
 			{
 				playerSection = 4;
-				SetPosition(0.357F, -0.249F);
+				SetPosition(0.257F, -0.159F);
 			}
 
 			if ((positionX > 0) && (positionY > -positionX * 3) && (positionY < -positionX))
 			{
 				playerSection = 5;
-				SetPosition(0.247F, -0.362F);
+				SetPosition(0.085F, -0.294F);
 			}
 
 			if ((positionY < 0) && (positionX > positionY / 3) && (positionX < -positionY / 3))
 			{
 				playerSection = 6;
-				SetPosition(-0.003F, -0.462F);
+				SetPosition(-0.091F, -0.349F);
 			}
 
 			if ((positionY < 0) && (positionX > positionY) && (positionX < positionY / 3))
 			{
 				playerSection = 7;
-				SetPosition(-0.185F, -0.436F);
+				SetPosition(-0.275F, -0.298F);
 			}
 
 			if ((positionY < 0) && (positionX > positionY * 3) && (positionX < positionY))
 			{
 				playerSection = 8;
-				SetPosition(-0.329F, -0.33F);
+				SetPosition(-0.437F, -0.158F);
 			}
 
 			if ((positionX < 0) && (positionY > positionX / 3) && (positionY < -positionX / 3))
 			{
 				playerSection = 9;
-				SetPosition(-0.452F, -0.064F);
+				SetPosition(-0.454F, 0.03F);
 			}
 
 			if ((positionX < 0) && (positionY > -positionX / 3) && (positionY < -positionX))
 			{
 				playerSection = 10;
-				SetPosition(-0.367F, 0.167F);
+				SetPosition(-0.375F, 0.182F);
 			}
 
 			if ((positionX < 0) && (positionY > -positionX) && (positionY < -positionX * 3))
 			{
 				playerSection = 11;
-				SetPosition(-0.184F, 0.291F);
+				SetPosition(-0.251F, 0.258F);
 			}
-
-			GetComponent<SpriteRenderer>().sprite = gunSprites[playerSection];
-		}
+            towerAnimator.SetInteger("sprite", playerSection);
+            GetComponent<SpriteRenderer>().sprite = gunSprites[playerSection];
+        }
 
 		private void SetPosition(float posX, float posY)
 		{
@@ -140,9 +142,9 @@ namespace PlayerObjects{
 			}
 		}
 
-	
-		public void getTargetAndFire()
-		{
+
+        public void getTargetAndFire()
+        {
             if (enemyTargetList.Count > 0 && _intervalGunAfterFire < 0)
             {
                 if (_countGunFire <= countGunFire)
@@ -151,10 +153,12 @@ namespace PlayerObjects{
                     corner = 90 - Mathf.Atan2(enemyTargetList[0].transform.position.x - transform.position.x, enemyTargetList[0].transform.position.y - transform.position.y) * Mathf.Rad2Deg;
                     if (_intervalGun < 0.0f)
                     {
+                        towerAnimator.SetBool("isFire", true);
                         spawnBullet();
                     }
                     if (_countGunFire == countGunFire)
                     {
+                        towerAnimator.SetBool("isFire", false);
                         _intervalGunAfterFire = intervalGunAfterFire;
                         _countGunFire = 0;
                     }
@@ -162,21 +166,24 @@ namespace PlayerObjects{
 
             }
 
-
+            if (enemyTargetList.Count == 0)
+            {
+                towerAnimator.SetBool("isFire", false);
+            }
         }
 
 		//создание пули и добавление ей импулса
 		private void spawnBullet()
 		{
-			bullet = Instantiate(bulletPrefab, spawnBulletPosition.transform.position, transform.rotation) as GameObject; 		 // создание пули
+            bullet = Instantiate(bulletPrefab, spawnBulletPosition.transform.position, transform.rotation) as GameObject; 		 // создание пули
 			bullet.transform.rotation = Quaternion.Euler(0,0,corner);													     // направление пули
 			bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * speed * Time.deltaTime,ForceMode2D.Impulse);// ускорение пули физическим свойством
 			_intervalGun = intervalGun;
             _countGunFire++;
 			SetBulletParameters(damage, lifeTime);
-		}
+        }
 
-		private void SetBulletParameters(float damagePoint, float lifeTime)
+        private void SetBulletParameters(float damagePoint, float lifeTime)
 		{
 			bullet.GetComponent<BulletDamagePoint>().damage = damagePoint;
 			bullet.GetComponent<BulletDamagePoint>().timeLife = lifeTime;
