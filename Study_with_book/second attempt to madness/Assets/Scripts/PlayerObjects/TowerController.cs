@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Player;
 
+
 namespace PlayerObjects{
 
 	public class TowerController : MonoBehaviour {
@@ -22,10 +23,13 @@ namespace PlayerObjects{
 
         [SerializeField] public Animator towerAnimator;
 
-        [SerializeField] private int   _countGunFire = 0;
-        [SerializeField] private float _intervalGunAfterFire;
-        [SerializeField] public int isFire = 0;
-        [SerializeField] private float _intervalGun;
+        [SerializeField] public float minDistanceEnemy = 11111110.0f;
+        [SerializeField] public GameObject currentEnemy;
+
+        private int   _countGunFire = 0;
+         private float _intervalGunAfterFire;
+         public int isFire = 0;
+         private float _intervalGun;
 		private float corner;
 
 		public int playerSection = 4;
@@ -131,7 +135,7 @@ namespace PlayerObjects{
 			if (other.tag == "Enemy") 
 			{
 				enemyTargetList.Add (other.gameObject);
-			}
+            }
 		}
 
 		void OnTriggerExit2D(Collider2D other)
@@ -145,12 +149,13 @@ namespace PlayerObjects{
 
         public void getTargetAndFire()
         {
-            if (enemyTargetList.Count > 0 && _intervalGunAfterFire < 0)
+            getCurrentTarget(enemyTargetList);
+            if (currentEnemy != null && _intervalGunAfterFire < 0)
             {
                 if (_countGunFire <= countGunFire)
                 {
-                    CalcPositionJoystick(enemyTargetList[0].transform.position.x - transform.position.x, enemyTargetList[0].transform.position.y - transform.position.y);
-                    corner = 90 - Mathf.Atan2(enemyTargetList[0].transform.position.x - transform.position.x, enemyTargetList[0].transform.position.y - transform.position.y) * Mathf.Rad2Deg;
+                    CalcPositionJoystick(currentEnemy.transform.position.x - transform.position.x, currentEnemy.transform.position.y - transform.position.y);
+                    corner = 90 - Mathf.Atan2(currentEnemy.transform.position.x - transform.position.x, currentEnemy.transform.position.y - transform.position.y) * Mathf.Rad2Deg;
                     if (_intervalGun < 0.0f)
                     {
                         towerAnimator.SetBool("isFire", true);
@@ -166,7 +171,7 @@ namespace PlayerObjects{
 
             }
 
-            if (enemyTargetList.Count == 0)
+            if (currentEnemy == null)
             {
                 towerAnimator.SetBool("isFire", false);
             }
@@ -188,6 +193,19 @@ namespace PlayerObjects{
 			bullet.GetComponent<BulletDamagePoint>().damage = damagePoint;
 			bullet.GetComponent<BulletDamagePoint>().timeLife = lifeTime;
 		}
+
+        private void getCurrentTarget(List<GameObject> array)
+        {
+            minDistanceEnemy = 11111111111f;
+            currentEnemy = null;
+            foreach(GameObject currentTarget in array){
+                if (currentTarget.GetComponent<Enemy.EnemyController>()._objectDistance < minDistanceEnemy){
+                    minDistanceEnemy = currentTarget.GetComponent<Enemy.EnemyController>()._objectDistance;
+                    currentEnemy = currentTarget;
+
+                }
+            }
+        }
 
 	}
 

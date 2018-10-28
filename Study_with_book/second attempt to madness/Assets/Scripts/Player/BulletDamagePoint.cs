@@ -17,7 +17,7 @@ namespace Player{
 		}
 		
 		// Update is called once per frame
-		void Update () {
+		void FixedUpdate () {
 			timeLife -= Time.deltaTime;
 			if (timeLife <= 0f) 
 			{

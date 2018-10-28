@@ -18,8 +18,6 @@ namespace Enemy{
 		[SerializeField] private GameObject PlayerObject;
 		[SerializeField] public float distance = 4.0f;
 		[SerializeField] public float realDistance;
-		[SerializeField] public GameObject playerBase;
-		[SerializeField] public Vector2 playerBasePos;
 		[SerializeField] public bool walkToPlayerBase = false;
 		[SerializeField] public bool findPlayer = false;
 		[SerializeField] public bool damageTargetObject = false;
@@ -39,80 +37,95 @@ namespace Enemy{
 
 		[SerializeField] public GameObject gameOverMenu;
 
+        [SerializeField] public Animator enemyAnimator;
 
-		[SerializeField] public List<GameObject> playerBaseObjects;
-		[SerializeField] public GameObject newBasePlayerObject;
+        [SerializeField] public List<GameObject> playerTowerObjects;
+        [SerializeField] public List<GameObject> playerBaseObjects;
+        [SerializeField] public float minDistanceToTower = 1111110.0f;
+        [SerializeField] public float minDistanceToBase = 11111110.0f;
+        [SerializeField] public GameObject playerTowerCurrent;
+        [SerializeField] public GameObject playerBaseCurrent;
 
-		[SerializeField] public float newDistance = 0.0f;
-		[SerializeField] public float minNewDistance = 0.0f;
-
-		// Use this for initialization
-		void Start () {
-			moveEnemy(findPlayer, walkToPlayerBase, damageTargetObject);
+        // Use this for initialization
+        void Start () {
+            Objects.Add(FindPlayerObjects());
+            enemyAnimator = this.GetComponent<Animator>();
+            moveEnemy(findPlayer, walkToPlayerBase, damageTargetObject);
 			PlayerObject = GameObject.FindWithTag ("MyPlayer");
 			_intervalToDamage = intervalToDamage;
 		}
 
 		// Update is called once per frame
 		void Update () {
-			SetPlayerPos ();
+            //enemyAnimator = this.GetComponent<Animator>();
+            SetPlayerPos ();
 			setPlayerDistance ();
 			calcFindPlayer (realDistance);
 			moveEnemy(findPlayer, walkToPlayerBase, damageTargetObject);
 			findPlayerObjectToDamage ();
 		}
 
-		public void findPlayerObjectToDamage()
-		{
-			
-			if (Objects.Count > 0) {
+        public void findPlayerObjectToDamage()
+        {
+            if (Objects.Count > 0 && Objects[0] != null)
+            {
+                _intervalToDamage -= Time.deltaTime;
+                _objectDistance = calcDistanceObject(Objects[0]);
 
-				_intervalToDamage -= Time.deltaTime;
-				_objectDistance = calcDistanceObject (Objects [0]);
+                if (_objectDistance <= objectDistance)
+                {
+                    damageTargetObject = true;
 
-				if (_objectDistance <= objectDistance) {
-					damageTargetObject = true;
+                    if (_intervalToDamage < 0.0f)
+                    {
+                        enemyAnimator.SetBool("isDamage", true);
+                        damagePlayerObjects(Objects[0], damage, false);
+                        _intervalToDamage = intervalToDamage;
+                    }
+                }
+            } else {
+                damageTargetObject = false;
+                Objects.RemoveAt(0);
+                Objects.Add(FindPlayerObjects());
+            }
 
-					if (_intervalToDamage < 0.0f) {
-						damagePlayerObjects (Objects [0], damage, false);
-						_intervalToDamage = intervalToDamage;
-					}
-				} 
-			}
+            if ((realDistance <= objectDistance) && findPlayer == true)
+            {
+                _intervalToDamage -= Time.deltaTime;
+                damageTargetObject = true;
 
-            if ((realDistance <= objectDistance) && findPlayer == true) {
-				_intervalToDamage -= Time.deltaTime;
-				damageTargetObject = true;
-	
-				if (_intervalToDamage < 0.0f) {
-					damagePlayerObjects (PlayerObject, damage, true);
-					_intervalToDamage = intervalToDamage;
-				}
-            } else 
+                if (_intervalToDamage < 0.0f)
+                {
+                    enemyAnimator.SetBool("isDamage", true);
+                    damagePlayerObjects(PlayerObject, damage, true);
+                    _intervalToDamage = intervalToDamage;
+                }
+            }
 
             if (realDistance >= objectDistance && findPlayer == true)
             {
                 damageTargetObject = false;
+                enemyAnimator.SetBool("isDamage", false);
             }
-		}
+
+        }
 
 		public void damagePlayerObjects(GameObject damageTarget, float damagePoint, bool isDamagePlayer)
 		{
-           // if (!findPlayer)
-           // {
-                if (!isDamagePlayer)
+
+            if (!isDamagePlayer)
                 {
-                    damageTarget.GetComponent<PlayerObjectHP>().TakeDamage(damagePoint);
+                enemyAnimator.SetBool("isDamage", true);
+                damageTarget.GetComponent<PlayerObjectHP>().TakeDamage(damagePoint);
                 }
                 else
                 {
-                    damageTarget.GetComponent<PlayerHP>().TakeDamage(damagePoint);
+                enemyAnimator.SetBool("isDamage", true);
+                damageTarget.GetComponent<PlayerHP>().TakeDamage(damagePoint);
                 }
-            //}
-
 		}
 
-		public void GetBasePos()
+		public void GetEnemyBasePos()
 		{
             if (enemyBase != null)
             {
@@ -120,17 +133,18 @@ namespace Enemy{
             }
 		}
 
-		public void moveEnemy(bool isPlayer, bool isWalkToPlayerBase, bool isDamageTargetObject)
+        public void moveEnemy(bool isPlayer, bool isWalkToPlayerBase, bool isDamageTargetObject)
 		{
-			if (!isDamageTargetObject) {
+            if (!isDamageTargetObject) {
 				if (!isWalkToPlayerBase) {
 					if (!isPlayer) {
 						_waitTimeToNewPosition -= Time.deltaTime;
 						if (_waitTimeToNewPosition <= 0) {
-							GetBasePos ();
-							newPosEnemy = (Random.insideUnitCircle) * radiusEnemy; // переделать на учет базы
-							newPosEnemy = new Vector2 (enemyBasePos.x + newPosEnemy.x, enemyBasePos.y + newPosEnemy.y);
-							_waitTimeToNewPosition = waitTimeToNewPosition;
+							GetEnemyBasePos ();
+                            newPosEnemy = randOnCircle(radiusEnemy);
+                            newPosEnemy = new Vector2 (enemyBasePos.x + newPosEnemy.x, enemyBasePos.y + newPosEnemy.y);
+
+                            _waitTimeToNewPosition = waitTimeToNewPosition;
 						}
 						transfortDirection (newPosEnemy);
 					} else if (isPlayer) {
@@ -141,72 +155,82 @@ namespace Enemy{
 				
 					if (!isPlayer) {
 						if (Objects.Count > 0) {
-							Vector2 TowerPos = new Vector2 (Objects [0].transform.position.x, Objects [0].transform.position.y);
-							transfortDirection (TowerPos);
-						} else {
-							getPlayerBasePos ();
-							transfortDirection (playerBasePos);
-						}
-					} else if (isPlayer) {
+                            if (Objects[0] == null)
+                            {
+                                damageTargetObject = false;
+                                Objects.RemoveAt(0);
+                                Objects.Add(FindPlayerObjects());
+                                } else {
+                                enemyAnimator.SetBool("isDamage", false);
+                                Vector2 objectPos = new Vector2(Objects[0].transform.position.x, Objects[0].transform.position.y);
+                                    transfortDirection(objectPos);
+                                }
+                            }
+
+                    } else if (isPlayer) {
 						transfortDirection (PlayerPos);
 					}
 				}
 			}
-
 		}
 
 		public void transfortDirection(Vector2 targetPos)
 		{
-			this.transform.TransformDirection (targetPos);
+            enemyAnimator.SetBool("isRun", true);
+            this.transform.TransformDirection (targetPos);
 			this.transform.position = Vector2.MoveTowards (transform.position, targetPos, speed * Time.deltaTime);
 			CalcPositionJoystick (targetPos.x - transform.position.x, targetPos.y - transform.position.y);
+            if (new Vector2(this.transform.position.x, this.transform.position.y) == targetPos){
+                enemyAnimator.SetBool("isRun", false);
+            }
 		}
 
 		//вычисление плоскости для поворота персонажа джойстиком
 		public void CalcPositionJoystick(float positionX, float positionY)
 		{
 
-			if ((positionX > 0) && (positionY > -positionX / 2) && (positionY < positionX / 2))
-			{
-				enemySection = 0;
-			}
+            if ((positionX > 0) && (positionY > -positionX / 2) && (positionY < positionX / 2))
+            {
+                enemySection = 0;
+            }
 
-			if ((positionX > 0) && (positionY > positionX / 2) && (positionY < positionX * 2))
-			{
-				enemySection = 1;
-			}
+            if ((positionX > 0) && (positionY > positionX / 2) && (positionY < positionX * 2))
+            {
+                enemySection = 1;
+            }
 
-			if ((positionY > 0) && (positionX > -positionY / 2) && (positionX < positionY / 2))
-			{
-				enemySection = 2;
-			}
+            if ((positionY > 0) && (positionX > -positionY / 2) && (positionX < positionY / 2))
+            {
+                enemySection = 2;
+            }
 
-			if ((positionY > 0) && (positionX > -positionY * 2) && (positionX < -positionY / 2))
-			{
-				enemySection = 3;
-			}
+            if ((positionY > 0) && (positionX > -positionY * 2) && (positionX < -positionY / 2))
+            {
+                enemySection = 3;
+            }
 
-			if ((positionX < 0) && (positionY > positionX / 2) && (positionY < -positionX / 2))
-			{
-				enemySection = 4;
-			}
+            if ((positionX < 0) && (positionY > positionX / 2) && (positionY < -positionX / 2))
+            {
+                enemySection = 4;
+            }
 
-			if ((positionX < 0) && (positionY > positionX * 2) && (positionY < positionX / 2))
-			{
-				enemySection = 5;
-			}
+            if ((positionX < 0) && (positionY > positionX * 2) && (positionY < positionX / 2))
+            {
+                enemySection = 5;
+            }
 
-			if ((positionY < 0) && (positionX > positionY / 2) && (positionX < -positionY / 2))
-			{
-				enemySection = 6;
-			}
+            if ((positionY < 0) && (positionX > positionY / 2) && (positionX < -positionY / 2))
+            {
+                enemySection = 6;
+            }
 
-			if ((positionY < 0) && (positionX > -positionY / 2) && (positionX < -positionY * 2))
-			{
-				enemySection = 7;
-			}
+            if ((positionY < 0) && (positionX > -positionY / 2) && (positionX < -positionY * 2))
+            {
+                enemySection = 7;
+            }
+            enemyAnimator.SetInteger("sprite", enemySection);
 
-			GetComponent<SpriteRenderer>().sprite = enemySprites[enemySection];
+            GetComponent<SpriteRenderer>().sprite = enemySprites[enemySection];
 		}
 
 		public void setBaseSpawn (float xPos, float yPos)
@@ -217,11 +241,6 @@ namespace Enemy{
 		public void setEnemyBase(GameObject EnemyBaseGameObject)
 		{
 			enemyBase = EnemyBaseGameObject;
-		}
-
-		public void setPlayerBase(GameObject playerBaseGameObject)
-		{
-			playerBase = playerBaseGameObject;
 		}
 
 		public void setWalkToPlayerBase(bool spawnToPlayerBase)
@@ -256,46 +275,88 @@ namespace Enemy{
 			PlayerPos = new Vector2 (PlayerObject.transform.position.x, PlayerObject.transform.position.y);
 		}
 
-		public void getPlayerBasePos()
-		{
-			if (playerBase == null) {
-				FindNewPlayerBase ();
-			} else {
-				playerBasePos = new Vector2 (playerBase.transform.position.x, playerBase.transform.position.y);
-			}
-		}
-			
-		public void FindNewPlayerBase()
-		{
-			if (GameObject.FindGameObjectsWithTag ("PlayerBase").Length == 0) 
-			{
-				gameOverMenu.GetComponent<PauseController> ().SetTimeScale (true);
-				enabled = false;
-			} 
-			else 
-			{
-				playerBaseObjects.AddRange (GameObject.FindGameObjectsWithTag ("PlayerBase"));
+        public Vector2 randOnCircle(float maxRadius, float minRadius = 1.9303124F)
+        {
+            float randAng = Random.Range(0, Mathf.PI * 2);
+            Vector2 minCircle = new Vector2(Mathf.Cos(randAng) * minRadius, Mathf.Sin(randAng) * minRadius);
+            Vector2 maxCircle = new Vector2(Mathf.Cos(randAng) * maxRadius, Mathf.Sin(randAng) * maxRadius);
 
-				newDistance = 0.0f;
+            float realXPos = Random.Range(minCircle.x, maxCircle.x);
+            float realYPos = Random.Range(minCircle.y, maxCircle.y);
 
-				minNewDistance = calcDistanceObject (playerBaseObjects [0]);
+            return new Vector2(realXPos, realYPos);
+        }
 
-				foreach (GameObject value in playerBaseObjects) {
-					newDistance = calcDistanceObject (value);
-					if (minNewDistance >= newDistance) {
-						newBasePlayerObject = value;
-					}
-				}
 
-				if (playerBaseObjects [0] == null) {
-					playerBaseObjects.RemoveAt (0);
-				}
+        public GameObject FindPlayerObjects()
+        {
+            if (Objects.Count > 0 && Objects[0] == null)
+            {
+                Objects.RemoveAt(0);
+            }
 
-				playerBaseObjects.Clear ();
-				playerBase = newBasePlayerObject;
-			}
-		}
+            Objects.Clear();
+            playerTowerObjects.Clear();
+            playerBaseObjects.Clear();
+            playerBaseCurrent = null;
+            playerTowerCurrent = null;
+            minDistanceToBase = 11111110.0f;
+            minDistanceToTower = 1111110.0f;
 
-	}
+            playerTowerObjects.AddRange(GameObject.FindGameObjectsWithTag("TowerPlayer"));
+            playerBaseObjects.AddRange(GameObject.FindGameObjectsWithTag("PlayerBase"));
+
+            foreach (GameObject objectTower in playerTowerObjects)
+            {
+                float distanceTower = calcDistanceObject(objectTower);
+                if (minDistanceToTower > distanceTower)
+                {
+                    minDistanceToTower = distanceTower;
+                    playerTowerCurrent = objectTower;
+                }
+            }
+
+            foreach (GameObject objectBase in playerBaseObjects)
+            {
+                float distanceBase = calcDistanceObject(objectBase);
+                if (minDistanceToBase > distanceBase)
+                {
+                    minDistanceToBase = distanceBase;
+                    playerBaseCurrent = objectBase;
+                }
+            }
+
+            if (playerBaseObjects.Count > 0 && playerTowerObjects.Count > 0)
+            {
+                if (minDistanceToBase > minDistanceToTower)
+                {
+                    return playerTowerCurrent;
+                }
+                else
+                {
+                    return playerBaseCurrent;
+                }
+
+            }
+
+            if (playerBaseObjects.Count == 0 && playerTowerObjects.Count == 0)
+            {
+                gameOverMenu.GetComponent<PauseController>().SetTimeScale(true);
+            }
+
+            if (playerBaseObjects.Count == 0 && playerTowerObjects.Count > 0)
+            {
+                return playerTowerCurrent;
+            }
+
+            if (playerTowerObjects.Count == 0 && playerBaseObjects.Count > 0)
+            {
+                return playerBaseCurrent;
+            }
+            return null;
+
+        }
+
+    }
 }
                                                                                                                                                                                  

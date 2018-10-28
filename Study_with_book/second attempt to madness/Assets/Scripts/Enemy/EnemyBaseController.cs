@@ -21,11 +21,11 @@ namespace Enemy{
 
 		[SerializeField] public GameObject GameOverMenu;
 
-		// Use this for initialization
-		void Start () {
+        // Use this for initialization
+        void Start () {
 			_intervalSpawn = intervalSpawn;
 			_intervalSpawnToPlayerBase = intervalSpawnToPlayerBase;
-		}
+        }
 		
 		// Update is called once per frame
 		void Update () {
@@ -37,9 +37,9 @@ namespace Enemy{
 		}
 
 		public void setSpawnPosition(){
-			spawnPosition = Random.insideUnitCircle/2;  // переделать на учет базы
+			spawnPosition = Random.insideUnitCircle/2;  
 			spawnPosition = new Vector2 (transform.position.x + spawnPosition.x, transform.position.y + spawnPosition.y);
-		}
+        }
 
 		public void spawnEnemy(){
 			if (enemyCount.Count <= countEnemiesSpawn && _intervalSpawn <= 0)
@@ -57,12 +57,11 @@ namespace Enemy{
 			if (_intervalSpawnToPlayerBase <= 0 && walkToPlayerBase)
 			{
 				enemy = Instantiate (EnemyPrefab, spawnPosition, transform.rotation) as GameObject;
-				enemy.GetComponent<EnemyController> ().setPlayerBase (PlayerBase);
 				enemy.GetComponent<EnemyController> ().setWalkToPlayerBase (walkToPlayerBase);
 				enemy.GetComponent<EnemyController> ().gameOverMenu = GameOverMenu;
 				_intervalSpawnToPlayerBase = intervalSpawnToPlayerBase;
 			}
 		}
 
-	}
+    }
 }

@@ -109,7 +109,7 @@ namespace Player{
 		{
 			corner = 360 - Mathf.Atan2 (handlePos.x, handlePos.y) * Mathf.Rad2Deg;
 			RealCorner = Random.Range(-CornerShootGun, CornerShootGun);
-			RealSpeed = Random.Range (speed-(speed/2), speed+(speed/2));
+			RealSpeed = Random.Range (speed-(speed), speed+(speed));
 		}
 
 	}

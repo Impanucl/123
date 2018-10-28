@@ -25,7 +25,7 @@ namespace Player{
 	        Keyboard = 1
 	    }
 
-	    public moveAxes axes = moveAxes.Joystick;
+        public moveAxes axes = moveAxes.Joystick;
 
 	    void Start()
 	    {
@@ -34,7 +34,7 @@ namespace Player{
 	    }
 
 	    //движение персонажа
-	    void Update()
+	    void FixedUpdate()
 	    {
 	        MoveJoystick position = moveJoystick.GetComponent<MoveJoystick>();
 
@@ -66,8 +66,8 @@ namespace Player{
             playerAnimator.SetBool("isRun", isRun);
 
             //движение игрока
-            Vector3 movement = new Vector2(deltaX, deltaY);
-	        movement = Vector2.ClampMagnitude(movement, speed);
+            Vector3 movement = new Vector3(deltaX, deltaY, 0);
+	        movement = Vector3.ClampMagnitude(movement, speed);
 	        movement *= Time.deltaTime;
 
 	        if (deltaX != 0 || deltaY != 0)
