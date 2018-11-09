@@ -20,6 +20,10 @@ namespace MYGUI{
 
 		}
 
+        public void ExitApplication(){
+                Application.Quit();
+        }
+
 		public void SetTimeScale (bool active)
 		{
 			if (active)

@@ -123,7 +123,7 @@ MonoBehaviour:
   walkToPlayerBase: 0
   findPlayer: 0
   damageTargetObject: 0
-  damage: 30
+  damage: 10
   intervalToDamage: 1
   _intervalToDamage: 0
   objectDistance: 1.5

@@ -1,14 +1,37 @@
 ﻿<Properties StartupConfiguration="{C54A9EB9-9E5C-969D-D321-851969C225B7}|">
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Enemy/EnemyController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GUI/PauseController.cs">
     <Files>
       <File FileName="Assets/Scripts/Enemy/EnemyBaseController.cs" Line="22" Column="51" />
       <File FileName="Assets/Scripts/Enemy/EnemyController.cs" Line="60" Column="15" />
       <File FileName="Assets/Scripts/Enemy/RadiusCollider.cs" Line="9" Column="13" />
       <File FileName="Assets/Scripts/PlayerObjects/PlayerObjectHP.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Player/PlayerHP.cs" Line="42" Column="68" />
       <File FileName="Assets/Scripts/PlayerObjects/TowerController.cs" Line="152" Column="47" />
+      <File FileName="Assets/Scripts/GUI/PauseController.cs" Line="23" Column="37" />
+      <File FileName="Assets/Scripts/Player/PlayerHP.cs" Line="18" Column="36" />
+      <File FileName="Assets/Scripts/GUI/HealthBar.cs" Line="45" Column="27" />
+      <File FileName="Assets/Scripts/GUI/MoveJoystick.cs" Line="28" Column="61" />
+      <File FileName="Assets/Scripts/GUI/RotationJoystick.cs" Line="50" Column="13" />
+      <File FileName="Assets/Scripts/Game/SceneLoader.cs" Line="17" Column="28" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="second attempt to madness" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="Enemy" expanded="True" />
+                <Node name="Game" expanded="True" />
+                <Node name="GUI" expanded="True">
+                  <Node name="PauseController.cs" selected="True" />
+                </Node>
+                <Node name="Player" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

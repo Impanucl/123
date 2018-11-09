@@ -67,6 +67,8 @@
     <Compile Include="Assets\Scripts\Enemy\RadiusCollider.cs" />
     <Compile Include="Assets\Scripts\Game\GameEvent.cs" />
     <Compile Include="Assets\Scripts\Game\Messenger.cs" />
+    <Compile Include="Assets\Scripts\Game\SceneLoader.cs" />
+    <Compile Include="Assets\Scripts\GUI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\GUI\Joystick.cs" />
     <Compile Include="Assets\Scripts\GUI\MoveJoystick.cs" />
     <Compile Include="Assets\Scripts\GUI\PauseController.cs" />
